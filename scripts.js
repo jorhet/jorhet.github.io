@@ -40,30 +40,26 @@ function displayGeneList(clusterId) {
     }
 }
 
+// Read CSV file when page loads
+window.onload = function() {
+    fetch('clustering.csv')
+        .then(response => response.text())
+        .then(data => {
+            const lines = data.split('\n').slice(1);
+            lines.forEach(line => {
+                const [gene, cluster] = line.split(',');
+                const clusterId = parseInt(cluster.trim());
+                if (!clusters[clusterId - 1]) {
+                    clusters[clusterId - 1] = [];
+                }
+                clusters[clusterId - 1].push(gene.trim());
+            });
+            populateClusterSelector();
+        });
+};
+
 // Event listener for cluster selector change
 document.getElementById('cluster-select').addEventListener('change', function() {
     const selectedClusterId = parseInt(this.value);
     displayGeneList(selectedClusterId);
-});
-
-// Event listener for file upload button click
-document.getElementById('file-upload').addEventListener('click', function() {
-    document.getElementById('file-input').click();
-});
-
-// Event listener for file input change
-document.getElementById('file-input').addEventListener('change', function() {
-    const file = this.files[0];
-    readCSVFile(file, function(data) {
-        clusters = [];
-        for (let i = 0; i < 80; i++) {
-            clusters.push([]);
-        }
-        data.forEach(row => {
-            const gene = row[0];
-            const clusterId = parseInt(row[1]);
-            clusters[clusterId - 1].push(gene);
-        });
-        populateClusterSelector();
-    });
 });
