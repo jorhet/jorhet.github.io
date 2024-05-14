@@ -3,21 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gene Clustering Visualization</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Gene Clusters</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Gene Clustering Visualization</h1>
-    <div class="cluster-selector">
-        <label for="cluster-select">Select Cluster:</label>
-        <select id="cluster-select">
-            <!-- Options for clusters will be populated dynamically -->
-        </select>
-    </div>
-    <div id="gene-list">
-        <!-- Gene list for the selected cluster will be displayed here -->
+    <div class="container">
+        <h1 class="my-4">Gene Clusters</h1>
+        <div class="form-group">
+            <label for="clusterSelect">Select Cluster:</label>
+            <select id="clusterSelect" class="form-control"></select>
+        </div>
+        <h2 class="my-4">Genes in Selected Cluster:</h2>
+        <ul id="geneList" class="list-group"></ul>
     </div>
 
-    <script src="scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
