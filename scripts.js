@@ -1,3 +1,5 @@
+let clusters = [];
+
 // Function to read CSV file
 function readCSVFile(file, callback) {
     const reader = new FileReader();
@@ -10,7 +12,7 @@ function readCSVFile(file, callback) {
 }
 
 // Function to populate cluster selector dropdown
-function populateClusterSelector(clusters) {
+function populateClusterSelector() {
     const clusterSelect = document.getElementById('cluster-select');
     clusters.forEach((cluster, index) => {
         const option = document.createElement('option');
@@ -21,7 +23,7 @@ function populateClusterSelector(clusters) {
 }
 
 // Function to display gene list for selected cluster
-function displayGeneList(clusterId, clusters) {
+function displayGeneList(clusterId) {
     const geneListContainer = document.getElementById('gene-list');
     const genes = clusters[clusterId - 1];
     if (genes) {
@@ -41,7 +43,12 @@ function displayGeneList(clusterId, clusters) {
 // Event listener for cluster selector change
 document.getElementById('cluster-select').addEventListener('change', function() {
     const selectedClusterId = parseInt(this.value);
-    displayGeneList(selectedClusterId, clusters);
+    displayGeneList(selectedClusterId);
+});
+
+// Event listener for file upload button click
+document.getElementById('file-upload').addEventListener('click', function() {
+    document.getElementById('file-input').click();
 });
 
 // Event listener for file input change
@@ -57,6 +64,6 @@ document.getElementById('file-input').addEventListener('change', function() {
             const clusterId = parseInt(row[1]);
             clusters[clusterId - 1].push(gene);
         });
-        populateClusterSelector(clusters);
+        populateClusterSelector();
     });
 });
