@@ -1,65 +1,44 @@
-let clusters = [];
+javascript
+document.addEventListener('DOMContentLoaded', function () {
+    const clusterSelect = document.getElementById('clusterSelect');
+    const geneList = document.getElementById('geneList');
 
-// Function to read CSV file
-function readCSVFile(file, callback) {
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const csv = event.target.result;
-        const data = csv.split('\n').map(row => row.split(','));
-        callback(data);
-    };
-    reader.readAsText(file);
-}
+    Papa.parse('clusterization.csv', {
+        download: true,
+        header: true,
+        complete: function (results) {
+            const data = results.data;
 
-// Function to populate cluster selector dropdown
-function populateClusterSelector() {
-    const clusterSelect = document.getElementById('cluster-select');
-    clusters.forEach((cluster, index) => {
-        const option = document.createElement('option');
-        option.value = index + 1;
-        option.textContent = `Cluster ${index + 1}`;
-        clusterSelect.appendChild(option);
-    });
-}
+            // Получаем уникальные кластеры
+            const clusters = [...new Set(data.map(item => item.cluster))].sort((a, b) => a - b);
 
-// Function to display gene list for selected cluster
-function displayGeneList(clusterId) {
-    const geneListContainer = document.getElementById('gene-list');
-    const genes = clusters[clusterId - 1];
-    if (genes) {
-        geneListContainer.innerHTML = '<h3>Genes in Selected Cluster:</h3>';
-        const ul = document.createElement('ul');
-        genes.forEach(gene => {
-            const li = document.createElement('li');
-            li.textContent = gene;
-            ul.appendChild(li);
-        });
-        geneListContainer.appendChild(ul);
-    } else {
-        geneListContainer.innerHTML = '<p>No genes found for selected cluster.</p>';
-    }
-}
-
-// Read CSV file when page loads
-window.onload = function() {
-    fetch('clustering.csv')
-        .then(response => response.text())
-        .then(data => {
-            const lines = data.split('\n').slice(1);
-            lines.forEach(line => {
-                const [gene, cluster] = line.split(',');
-                const clusterId = parseInt(cluster.trim());
-                if (!clusters[clusterId - 1]) {
-                    clusters[clusterId - 1] = [];
-                }
-                clusters[clusterId - 1].push(gene.trim());
+            // Заполняем выпадающий список кластерами
+            clusters.forEach(cluster => {
+                const option = document.createElement('option');
+                option.value = cluster;
+                option.textContent = `Cluster ${cluster}`;
+                clusterSelect.appendChild(option);
             });
-            populateClusterSelector();
-        });
-};
 
-// Event listener for cluster selector change
-document.getElementById('cluster-select').addEventListener('change', function() {
-    const selectedClusterId = parseInt(this.value);
-    displayGeneList(selectedClusterId);
+            // Обновляем список генов при выборе кластера
+            clusterSelect.addEventListener('change', function () {
+                const selectedCluster = clusterSelect.value;
+                const genes = data.filter(item => item.cluster === selectedCluster).map(item => item.okved);
+                
+                // Очищаем предыдущий список генов
+                geneList.innerHTML = '';
+
+                // Заполняем список генов
+                genes.forEach(gene => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.textContent = gene;
+                    geneList.appendChild(listItem);
+                });
+            });
+
+            // Триггерим событие изменения для начальной загрузки списка генов
+            clusterSelect.dispatchEvent(new Event('change'));
+        }
+    });
 });
