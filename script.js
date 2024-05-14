@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const clusterSelect = document.getElementById('clusterSelect');
     const geneList = document.getElementById('geneList');
 
-    Papa.parse('clustering.csv', {
+    Papa.parse('clusterization.csv', {
         download: true,
         header: true,
         complete: function (results) {
