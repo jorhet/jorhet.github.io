@@ -1,4 +1,3 @@
-javascript
 document.addEventListener('DOMContentLoaded', function () {
     const clusterSelect = document.getElementById('clusterSelect');
     const geneList = document.getElementById('geneList');
