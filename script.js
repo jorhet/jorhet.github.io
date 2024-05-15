@@ -1,8 +1,8 @@
-Saiga, [15 May 2024 at 09:09:53]:
-...document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const clusterSelect = document.getElementById('clusterSelect');
     const geneList = document.getElementById('geneList');
     const geneSearch = document.getElementById('geneSearch');
+    const searchButton = document.getElementById('searchButton');
 
     let data = [];
 
@@ -30,15 +30,17 @@ Saiga, [15 May 2024 at 09:09:53]:
             });
 
             // Триггерим событие изменения для начальной загрузки списка генов
-            clusterSelect.dispatchEvent(new Event('change'));
+            clusterSelect.dispa
+
+tchEvent(new Event('change'));
         }
     });
 
     // Функция для обновления списка генов
     function updateGeneList(cluster) {
         const genes = data.filter(item => item.cluster === cluster).map(item => item.okved);
-
-// Очищаем предыдущий список генов
+        
+        // Очищаем предыдущий список генов
         geneList.innerHTML = '';
 
         // Заполняем список генов
@@ -50,15 +52,27 @@ Saiga, [15 May 2024 at 09:09:53]:
         });
     }
 
-    // Добавляем функционал поиска по гену
-    geneSearch.addEventListener('input', function () {
+    // Функция для поиска гена
+    function searchGene() {
         const searchValue = geneSearch.value.trim().toLowerCase();
         if (searchValue) {
             const gene = data.find(item => item.okved.toLowerCase() === searchValue);
             if (gene) {
                 clusterSelect.value = gene.cluster;
                 updateGeneList(gene.cluster);
+            } else {
+                alert('Gene not found');
             }
+        }
+    }
+
+    // Добавляем функционал поиска по кнопке
+    searchButton.addEventListener('click', searchGene);
+
+    // Добавляем функционал поиска по клавише Enter
+    geneSearch.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            searchGene();
         }
     });
 });
