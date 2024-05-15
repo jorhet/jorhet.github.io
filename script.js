@@ -76,4 +76,3 @@ tchEvent(new Event('change'));
         }
     });
 });
-...
