@@ -52,9 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Функция для поиска гена
     function searchGene() {
-        const searchValue = geneSearch.value.trim().toLowerCase();
+        const searchValue = geneSearch.value.trim().toUpperCase();
         if (searchValue) {
-            const gene = data.find(item => item.okved.toLowerCase() === searchValue);
+            const gene = data.find(item => item.okved.toUpperCase() === searchValue);
             if (gene) {
                 clusterSelect.value = gene.cluster;
                 updateGeneList(gene.cluster);
@@ -72,5 +72,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.key === 'Enter') {
             searchGene();
         }
+    });
+
+    // Добавляем автоматический перевод в верхний регистр при вводе текста
+    geneSearch.addEventListener('input', function () {
+        geneSearch.value = geneSearch.value.toUpperCase();
     });
 });
