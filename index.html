@@ -12,14 +12,20 @@
         .container {
             max-width: 800px;
         }
-        .card {
-            height: 100%;
+        .gene-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
         }
-        .card-body {
+        .gene-item {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100px; /* фиксированная высота для всех карточек */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            height: 100px; /* фиксированная высота для всех ячеек */
         }
     </style>
 </head>
@@ -31,7 +37,7 @@
             <select id="clusterSelect" class="form-control"></select>
         </div>
         <h2 class="my-4">Genes in Selected Cluster:</h2>
-        <div id="geneList" class="row"></div>
+        <div id="geneList" class="gene-grid"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
