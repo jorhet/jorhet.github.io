@@ -30,9 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             // Триггерим событие изменения для начальной загрузки списка генов
-            clusterSelect.dispa
-
-tchEvent(new Event('change'));
+            clusterSelect.dispatchEvent(new Event('change'));
         }
     });
 
