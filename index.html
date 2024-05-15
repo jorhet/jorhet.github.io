@@ -34,7 +34,12 @@
         <h1 class="my-4">Gene Clusters</h1>
         <div class="form-group">
             <label for="geneSearch">Search Gene:</label>
-            <input type="text" id="geneSearch" class="form-control" placeholder="Enter gene name">
+            <div class="input-group">
+                <input type="text" id="geneSearch" class="form-control" placeholder="Enter gene name">
+                <div class="input-group-append">
+                    <button id="searchButton" class="btn btn-primary" type="button">Найти</button>
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="clusterSelect">Select Cluster:</label>
