@@ -50,24 +50,25 @@
     </div>
 
     <div class="form-group float-right">
-    <label for="thresholdSelect">Select threshhold:</label>
-    <select id="thresholdSelect" class="form-control">
-        <option value="0">0</option>
-        <option value="50">50</option>
-        <option value="70">70</option>
-    </select>
-</div>
-
-<div class="form-group float-right">
-    <label>Trim edges with w=1:</label>
-    <input type="checkbox" id="trimEdges" class="form-check-input">
-</div>
-
-<div class="form-group float-right">
-    <label>Remove small clusters:</label>
-    <input type="checkbox" id="removeSmallClusters" class="form-check-input">
-</div>
-
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label for="thresholdSelect">Select threshhold:</label>
+                <select id="thresholdSelect" class="form-control">
+                    <option value="0">0</option>
+                    <option value="50">50</option>
+                    <option value="70">70</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Trim edges with w=1:</label>
+                <input type="checkbox" id="trimEdges" class="form-check-input">
+            </div>
+            <div class="col-md-4">
+                <label>Remove small clusters:</label>
+                <input type="checkbox" id="removeSmallClusters" class="form-check-input">
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="script.js"></script>
