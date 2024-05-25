@@ -49,6 +49,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
 
+            trimEdges.addEventListener('change', function () {
+                Papa.parse(getClusterizationFile(thresholdSelect.value, this.checked, removeSmallClusters.checked), {
+                    download: true,
+                    header: true,
+                    complete: function (results) {
+                        data = results.data;
+                        updateGeneList(clusterSelect.value);
+                    }
+                });
+            });
+
+            removeSmallClusters.addEventListener('change', function () {
+                Papa.parse(getClusterizationFile(thresholdSelect.value, trimEdges.checked, this.checked), {
+                    download: true,
+                    header: true,
+                    complete: function (results) {
+                        data = results.data;
+                        updateGeneList(clusterSelect.value);
+                    }
+                });
+            });
+
+
+
             // Функция для получения файла кластеризации
             function getClusterizationFile(threshold, trimEdges, removeSmallClusters) {
                 switch (threshold) {
