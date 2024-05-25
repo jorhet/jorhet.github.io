@@ -44,10 +44,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     header: true,
                     complete: function (results) {
                         data = results.data;
+                        updateClusterList();
                         updateGeneList(clusterSelect.value);
                     }
                 });
             });
+
+            function updateClusterList() {
+                // Получаем уникальные кластеры
+                const clusters = [...new Set(data.map(item => item.cluster))].sort((a, b) => a - b);
+                clusterSelect.innerHTML = ''; // Очищаем список
+                clusters.forEach(cluster => {
+                    const option = document.createElement('option');
+                    option.value = cluster;
+                    option.textContent = `Cluster: ${cluster}`;
+                    clusterSelect.appendChild(option);
+                });
+            }
+
 
             trimEdges.addEventListener('change', function () {
                 Papa.parse(getClusterizationFile(thresholdSelect.value, this.checked, removeSmallClusters.checked), {
