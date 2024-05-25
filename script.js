@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             clusters.forEach(cluster => {
                 const option = document.createElement('option');
                 option.value = cluster;
-                option.textContent = "Cluster: " + cluster;
+                option.textContent = cluster;
                 clusterSelect.appendChild(option);
             });
 
@@ -70,6 +70,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
             });
+
+
 
             // Функция для получения файла кластеризации
             function getClusterizationFile(threshold, trimEdges, removeSmallClusters) {
