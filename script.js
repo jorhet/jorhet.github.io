@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     header: true,
                     complete: function (results) {
                         data = results.data;
+                        updateClusterList();
                         updateGeneList(clusterSelect.value);
                     }
                 });
@@ -80,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     header: true,
                     complete: function (results) {
                         data = results.data;
+                        updateClusterList();
                         updateGeneList(clusterSelect.value);
                     }
                 });
