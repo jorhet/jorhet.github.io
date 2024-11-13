@@ -25,24 +25,20 @@
             border-radius: 4px;
             padding: 10px;
             background-color: #f9f9f9;
-            height: 60px;
+            height: 60px; /* Fixed height for all cells */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="my-4">Gene Clusters</h1>
-
-        <!-- File upload functionality for user-provided gene list -->
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="fileUpload">Upload your gene list:</label>
-                    <input type="file" id="fileUpload" class="form-control-file" accept=".csv, .txt">
+                <div class="form-group float-right">
+                    <!-- Removed threshold select, trim edges, and remove small clusters functionalities -->
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -64,79 +60,7 @@
         </div>
     </div>
 
-    <!-- JavaScript section for handling file upload and processing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script>
-        const geneClusters = {
-            "Cluster 1": ["GeneA", "GeneB", "GeneC"],
-            "Cluster 2": ["GeneD", "GeneE", "GeneF"],
-            // Define sample cluster data for demonstration purposes
-        };
-
-        // Display genes in the selected cluster
-        function displayGenes(cluster) {
-            const geneListDiv = document.getElementById("geneList");
-            geneListDiv.innerHTML = ""; // Clear previous entries
-
-            if (geneClusters[cluster]) {
-                geneClusters[cluster].forEach(gene => {
-                    const geneItem = document.createElement("div");
-                    geneItem.className = "gene-item";
-                    geneItem.textContent = gene;
-                    geneListDiv.appendChild(geneItem);
-                });
-            }
-        }
-
-        // Populate cluster select dropdown
-        function populateClusterDropdown() {
-            const clusterSelect = document.getElementById("clusterSelect");
-            clusterSelect.innerHTML = "";
-            Object.keys(geneClusters).forEach(cluster => {
-                const option = document.createElement("option");
-                option.value = cluster;
-                option.textContent = cluster;
-                clusterSelect.appendChild(option);
-            });
-        }
-
-        // Load user-provided gene list from file
-        document.getElementById("fileUpload").addEventListener("change", event => {
-            const file = event.target.files[0];
-            if (file) {
-                Papa.parse(file, {
-                    complete: function(results) {
-                        const userGenes = results.data.flat();
-                        analyzeUserGenes(userGenes);
-                    },
-                    header: false
-                });
-            }
-        });
-
-        // Function to match user-provided genes with predefined clusters
-        function analyzeUserGenes(userGenes) {
-            const matchedClusters = {};
-
-            // Iterate over geneClusters to find matches with userGenes
-            for (const [cluster, genes] of Object.entries(geneClusters)) {
-                const matchedGenes = genes.filter(gene => userGenes.includes(gene));
-                if (matchedGenes.length > 0) {
-                    matchedClusters[cluster] = matchedGenes;
-                }
-            }
-
-            // Update global geneClusters with matched data
-            Object.assign(geneClusters, matchedClusters);
-            populateClusterDropdown();
-            displayGenes(Object.keys(matchedClusters)[0] || ""); // Display first matched cluster
-        }
-
-        document.getElementById("clusterSelect").addEventListener("change", event => {
-            displayGenes(event.target.value);
-        });
-
-        populateClusterDropdown(); // Initialize dropdown on page load
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
