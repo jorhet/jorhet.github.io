@@ -6,12 +6,8 @@
     <title>Gene Clusters</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body {
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-        }
+        body { padding: 20px; }
+        .container { max-width: 800px; }
         .gene-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -25,20 +21,25 @@
             border-radius: 4px;
             padding: 10px;
             background-color: #f9f9f9;
-            height: 60px; /* Fixed height for all cells */
+            height: 60px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="my-4">Gene Clusters</h1>
+
+        <!-- File upload functionality for user-provided gene list -->
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group float-right">
-                    <!-- Removed threshold select, trim edges, and remove small clusters functionalities -->
+                <div class="form-group">
+                    <label for="fileUpload">Upload your gene list:</label>
+                    <input type="file" id="fileUpload" class="form-control-file" accept=".csv, .txt">
                 </div>
+                <button id="downloadButton" class="btn btn-success" style="display: none;">Download Clustered Genes</button>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -61,6 +62,90 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        const predefinedClusters = {
+            "Cluster 1": ["GeneA", "GeneB", "GeneC"],
+            "Cluster 2": ["GeneD", "GeneE", "GeneF"],
+            // Add more sample clusters if needed
+        };
+        const userClusteredGenes = {};
+
+        // Populate the cluster dropdown with predefined clusters
+        function populateClusterDropdown() {
+            const clusterSelect = document.getElementById("clusterSelect");
+            clusterSelect.innerHTML = "";
+            Object.keys(predefinedClusters).forEach(cluster => {
+                const option = document.createElement("option");
+                option.value = cluster;
+                option.textContent = cluster;
+                clusterSelect.appendChild(option);
+            });
+        }
+
+        // Display genes for the selected cluster
+        function displayGenes(cluster) {
+            const geneListDiv = document.getElementById("geneList");
+            geneListDiv.innerHTML = "";
+
+            const genes = predefinedClusters[cluster] || userClusteredGenes[cluster] || [];
+            genes.forEach(gene => {
+                const geneItem = document.createElement("div");
+                geneItem.className = "gene-item";
+                geneItem.textContent = gene;
+                geneListDiv.appendChild(geneItem);
+            });
+        }
+
+        document.getElementById("clusterSelect").addEventListener("change", event => {
+            displayGenes(event.target.value);
+        });
+
+        // Handle file upload and parse the user-provided gene list
+        document.getElementById("fileUpload").addEventListener("change", event => {
+            const file = event.target.files[0];
+            if (file) {
+                Papa.parse(file, {
+                    complete: function(results) {
+                        const userGenes = results.data.flat();
+                        clusterUserGenes(userGenes);
+                        document.getElementById("downloadButton").style.display = "inline-block"; // Show download button
+                    },
+                    header: false
+                });
+            }
+        });
+
+        // Cluster user genes and store results in userClusteredGenes
+        function clusterUserGenes(userGenes) {
+            userGenes.forEach(gene => {
+                for (const [cluster, genes] of Object.entries(predefinedClusters)) {
+                    if (genes.includes(gene)) {
+                        if (!userClusteredGenes[cluster]) userClusteredGenes[cluster] = [];
+                        userClusteredGenes[cluster].push(gene);
+                    }
+                }
+            });
+        }
+
+        // Download user-clustered genes as a CSV file
+        document.getElementById("downloadButton").addEventListener("click", () => {
+            const csvContent = Object.entries(userClusteredGenes)
+                .map(([cluster, genes]) => [cluster, ...genes].join(","))
+                .join("\n");
+
+            const blob = new Blob([csvContent], { type: "text/csv" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "clustered_genes.csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        });
+
+        // Initialize page with predefined clusters
+        populateClusterDropdown();
+    </script>
 </body>
 </html>
