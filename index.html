@@ -34,6 +34,16 @@
         <h1 class="my-4">Gene Clusters</h1>
         <div class="row">
             <div class="col-md-12">
+                <!-- File upload moved above cluster select dropdown -->
+                <div class="form-group">
+                    <label for="geneFileUpload">Upload Your Gene List:</label>
+                    <input type="file" id="geneFileUpload" class="form-control-file" accept=".csv, .txt">
+                </div>
+                <button id="downloadButton" class="btn btn-success" style="display: none;">Download Clustered Genes</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="geneSearch">Search Gene:</label>
                     <div class="input-group">
@@ -49,16 +59,6 @@
                 </div>
                 <h2 class="my-4">Genes in Selected Cluster:</h2>
                 <div id="geneList" class="gene-grid"></div>
-            </div>
-        </div>
-        <!-- New Section: File Upload -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="geneFileUpload">Upload Your Gene List:</label>
-                    <input type="file" id="geneFileUpload" class="form-control-file" accept=".csv, .txt">
-                </div>
-                <button id="downloadButton" class="btn btn-success" style="display: none;">Download Clustered Genes</button>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@
             Object.keys(predefinedClusters).forEach(cluster => {
                 const option = document.createElement("option");
                 option.value = cluster;
-                option.textContent = cluster;
+                option.textContent = `Cluster ${cluster}`;
                 clusterSelect.appendChild(option);
             });
         }
