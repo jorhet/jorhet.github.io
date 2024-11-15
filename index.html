@@ -67,11 +67,12 @@
             .then(data => {
                 const parsed = Papa.parse(data, { header: true });
                 parsed.data.forEach(row => {
-                    const cluster = `Cluster ${row.cluster}`;
-                    if (!predefinedClusters[cluster]) {
-                        predefinedClusters[cluster] = [];
+                    const clustername = `Cluster ${row.cluster}`;
+                    const cluster = `${row.cluster}`;
+                    if (!predefinedClusters[clustername]) {
+                        predefinedClusters[clustername] = [];
                     }
-                    predefinedClusters[cluster].push(row.okved);
+                    predefinedClusters[clustername].push(row.okved);
                 });
                 populateClusterSelect();
                 updateGeneList(); // Show Cluster 0 genes by default
@@ -80,10 +81,10 @@
         // Populate the cluster select dropdown
         function populateClusterSelect() {
             clusterSelect.innerHTML = "";
-            Object.keys(predefinedClusters).forEach(cluster => {
+            Object.keys(predefinedClusters).forEach(clustername => {
                 const option = document.createElement("option");
-                option.value = cluster;
-                option.textContent = cluster;
+                option.value = clustername;
+                option.textContent = clustername;
                 clusterSelect.appendChild(option);
             });
             clusterSelect.addEventListener("change", updateGeneList);
