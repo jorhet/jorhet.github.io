@@ -55,9 +55,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-        // Predefined clusters loaded from clusterization.csv
         const predefinedClusters = {};
-        let userClusteredGenes = {}; // Genes uploaded by the user
+        let userClusteredGenes = {};
         const clusterSelect = document.getElementById("clusterSelect");
         const geneList = document.getElementById("geneList");
 
@@ -67,30 +66,27 @@
             .then(data => {
                 const parsed = Papa.parse(data, { header: true });
                 parsed.data.forEach(row => {
-                    const clustername = `Cluster ${row.cluster}`;
-                    const cluster = `${row.cluster}`;
-                    if (!predefinedClusters[clustername]) {
-                        predefinedClusters[clustername] = [];
+                    const cluster = `Cluster ${row.cluster}`;
+                    if (!predefinedClusters[cluster]) {
+                        predefinedClusters[cluster] = [];
                     }
-                    predefinedClusters[clustername].push(row.okved);
+                    predefinedClusters[cluster].push(row.okved);
                 });
                 populateClusterSelect();
-                updateGeneList(); // Show Cluster 0 genes by default
+                updateGeneList();
             });
 
-        // Populate the cluster select dropdown
         function populateClusterSelect() {
             clusterSelect.innerHTML = "";
-            Object.keys(predefinedClusters).forEach(clustername => {
+            Object.keys(predefinedClusters).forEach(cluster => {
                 const option = document.createElement("option");
-                option.value = clustername;
-                option.textContent = clustername;
+                option.value = cluster;
+                option.textContent = cluster;
                 clusterSelect.appendChild(option);
             });
             clusterSelect.addEventListener("change", updateGeneList);
         }
 
-        // Update the displayed genes based on the selected cluster
         function updateGeneList() {
             const selectedCluster = clusterSelect.value;
             const genes = predefinedClusters[selectedCluster] || [];
@@ -111,15 +107,15 @@
             reader.readAsText(file);
         });
 
-        // Cluster the user's genes and assign "None" to unmatched genes
         function clusterUserGenes(userGenes) {
             userClusteredGenes = {};
             userGenes.forEach(gene => {
                 let found = false;
                 for (const [cluster, genes] of Object.entries(predefinedClusters)) {
                     if (genes.includes(gene)) {
-                        if (!userClusteredGenes[cluster]) userClusteredGenes[cluster] = [];
-                        userClusteredGenes[cluster].push(gene);
+                        const clusterNumber = cluster.replace("Cluster ", ""); // Extract number only
+                        if (!userClusteredGenes[clusterNumber]) userClusteredGenes[clusterNumber] = [];
+                        userClusteredGenes[clusterNumber].push(gene);
                         found = true;
                         break;
                     }
