@@ -29,12 +29,22 @@
     <div class="container">
         <h1 class="my-4">Gene Clusters</h1>
 
-        <!-- File upload functionality for user-provided gene list -->
+        <!-- File upload for clusterization.csv -->
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="fileUpload">Upload your gene list:</label>
-                    <input type="file" id="fileUpload" class="form-control-file" accept=".csv, .txt">
+                    <label for="clusterFileUpload">Upload clusterization.csv:</label>
+                    <input type="file" id="clusterFileUpload" class="form-control-file" accept=".csv">
+                </div>
+            </div>
+        </div>
+
+        <!-- File upload for user gene list -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="geneFileUpload">Upload your gene list:</label>
+                    <input type="file" id="geneFileUpload" class="form-control-file" accept=".csv, .txt">
                 </div>
                 <button id="downloadButton" class="btn btn-success" style="display: none;">Download Clustered Genes</button>
             </div>
@@ -42,15 +52,6 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="geneSearch">Search Gene:</label>
-                    <div class="input-group">
-                        <input type="text" id="geneSearch" class="form-control" placeholder="Enter gene name">
-                        <div class="input-group-append">
-                            <button id="searchButton" class="btn btn-primary" type="button">Search</button>
-                        </div>
-                    </div>
-                </div>
                 <div class="form-group">
                     <label for="clusterSelect">Select Cluster:</label>
                     <select id="clusterSelect" class="form-control"></select>
@@ -63,14 +64,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-        const predefinedClusters = {
-            "Cluster 1": ["GeneA", "GeneB", "GeneC"],
-            "Cluster 2": ["GeneD", "GeneE", "GeneF"],
-            // Add more sample clusters if needed
-        };
-        const userClusteredGenes = {};
+        let predefinedClusters = {}; // Will store clusters from clusterization.csv
+        let userClusteredGenes = {}; // For clustering user-uploaded genes
 
-        // Populate the cluster dropdown with predefined clusters
+        // Populate the cluster dropdown
         function populateClusterDropdown() {
             const clusterSelect = document.getElementById("clusterSelect");
             clusterSelect.innerHTML = "";
@@ -100,23 +97,46 @@
             displayGenes(event.target.value);
         });
 
-        // Handle file upload and parse the user-provided gene list
-        document.getElementById("fileUpload").addEventListener("change", event => {
+        // Handle upload of clusterization.csv
+        document.getElementById("clusterFileUpload").addEventListener("change", event => {
             const file = event.target.files[0];
             if (file) {
                 Papa.parse(file, {
                     complete: function(results) {
-                        const userGenes = results.data.flat();
-                        clusterUserGenes(userGenes);
-                        document.getElementById("downloadButton").style.display = "inline-block"; // Show download button
+                        predefinedClusters = {};
+                        results.data.forEach(row => {
+                            const cluster = row[0];
+                            const gene = row[1];
+                            if (!predefinedClusters[cluster]) {
+                                predefinedClusters[cluster] = [];
+                            }
+                            predefinedClusters[cluster].push(gene);
+                        });
+                        populateClusterDropdown();
                     },
                     header: false
                 });
             }
         });
 
-        // Cluster user genes and store results in userClusteredGenes
+        // Handle upload of user gene list
+        document.getElementById("geneFileUpload").addEventListener("change", event => {
+            const file = event.target.files[0];
+            if (file) {
+                Papa.parse(file, {
+                    complete: function(results) {
+                        const userGenes = results.data.flat();
+                        clusterUserGenes(userGenes);
+                        document.getElementById("downloadButton").style.display = "inline-block";
+                    },
+                    header: false
+                });
+            }
+        });
+
+        // Cluster user genes based on predefined clusters
         function clusterUserGenes(userGenes) {
+            userClusteredGenes = {}; // Reset user clusters
             userGenes.forEach(gene => {
                 for (const [cluster, genes] of Object.entries(predefinedClusters)) {
                     if (genes.includes(gene)) {
@@ -127,7 +147,7 @@
             });
         }
 
-        // Download user-clustered genes as a CSV file
+        // Download user-clustered genes as a CSV
         document.getElementById("downloadButton").addEventListener("click", () => {
             const csvContent = Object.entries(userClusteredGenes)
                 .map(([cluster, genes]) => [cluster, ...genes].join(","))
@@ -137,15 +157,12 @@
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.href = url;
-            link.download = "clustered_genes.csv";
+            link.download = "user_clustered_genes.csv";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
         });
-
-        // Initialize page with predefined clusters
-        populateClusterDropdown();
     </script>
 </body>
 </html>
