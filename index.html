@@ -6,8 +6,12 @@
     <title>Gene Clusters</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body { padding: 20px; }
-        .container { max-width: 800px; }
+        body {
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+        }
         .gene-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -21,27 +25,24 @@
             border-radius: 4px;
             padding: 10px;
             background-color: #f9f9f9;
-            height: 60px;
+            height: 60px; /* Fixed height for all cells */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="my-4">Gene Clusters</h1>
-
-        <!-- File upload for user gene list -->
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="geneFileUpload">Upload your gene list:</label>
-                    <input type="file" id="geneFileUpload" class="form-control-file" accept=".csv, .txt">
+                    <label for="geneSearch">Search Gene:</label>
+                    <div class="input-group">
+                        <input type="text" id="geneSearch" class="form-control" placeholder="Enter gene name">
+                        <div class="input-group-append">
+                            <button id="searchButton" class="btn btn-primary" type="button">Search</button>
+                        </div>
+                    </div>
                 </div>
-                <button id="downloadButton" class="btn btn-success" style="display: none;">Download Clustered Genes</button>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
                 <div class="form-group">
                     <label for="clusterSelect">Select Cluster:</label>
                     <select id="clusterSelect" class="form-control"></select>
@@ -50,14 +51,24 @@
                 <div id="geneList" class="gene-grid"></div>
             </div>
         </div>
+        <!-- New Section: File Upload -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="geneFileUpload">Upload Your Gene List:</label>
+                    <input type="file" id="geneFileUpload" class="form-control-file" accept=".csv, .txt">
+                </div>
+                <button id="downloadButton" class="btn btn-success" style="display: none;">Download Clustered Genes</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-        let predefinedClusters = {}; // For clusters from clusterization.csv
-        let userClusteredGenes = {}; // For clustering user-uploaded genes
+        let predefinedClusters = {}; // Clusters from clusterization.csv
+        let userClusteredGenes = {}; // User-provided genes' clustering
 
-        // Load predefined clusters from clusterization.csv at page load
+        // Load predefined clusters from clusterization.csv
         async function loadPredefinedClusters() {
             const response = await fetch('clusterization.csv');
             const text = await response.text();
@@ -78,7 +89,7 @@
             });
         }
 
-        // Populate the cluster dropdown
+        // Populate cluster dropdown
         function populateClusterDropdown() {
             const clusterSelect = document.getElementById("clusterSelect");
             clusterSelect.innerHTML = "";
@@ -90,12 +101,12 @@
             });
         }
 
-        // Display genes for the selected cluster
+        // Display genes in selected cluster
         function displayGenes(cluster) {
             const geneListDiv = document.getElementById("geneList");
             geneListDiv.innerHTML = "";
 
-            const genes = predefinedClusters[cluster] || userClusteredGenes[cluster] || [];
+            const genes = predefinedClusters[cluster] || [];
             genes.forEach(gene => {
                 const geneItem = document.createElement("div");
                 geneItem.className = "gene-item";
@@ -104,11 +115,12 @@
             });
         }
 
+        // Handle cluster selection change
         document.getElementById("clusterSelect").addEventListener("change", event => {
             displayGenes(event.target.value);
         });
 
-        // Handle upload of user gene list
+        // Handle user file upload
         document.getElementById("geneFileUpload").addEventListener("change", event => {
             const file = event.target.files[0];
             if (file) {
@@ -136,7 +148,7 @@
             });
         }
 
-        // Download user-clustered genes as a CSV
+        // Download user-clustered genes as CSV
         document.getElementById("downloadButton").addEventListener("click", () => {
             const csvContent = Object.entries(userClusteredGenes)
                 .map(([cluster, genes]) => [cluster, ...genes].join(","))
@@ -153,7 +165,7 @@
             URL.revokeObjectURL(url);
         });
 
-        // Initial load of predefined clusters
+        // Initial load
         loadPredefinedClusters();
     </script>
 </body>
