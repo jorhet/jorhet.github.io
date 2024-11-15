@@ -34,7 +34,6 @@
         <h1 class="my-4">Gene Clusters</h1>
         <div class="row">
             <div class="col-md-12">
-                <!-- File upload moved above cluster select dropdown -->
                 <div class="form-group">
                     <label for="geneFileUpload">Upload Your Gene List:</label>
                     <input type="file" id="geneFileUpload" class="form-control-file" accept=".csv, .txt">
@@ -68,14 +67,15 @@
         let predefinedClusters = {}; // Кластеры из clusterization.csv
         let userClusteredGenes = {}; // Кластеризация генов из загруженного файла пользователя
 
-        // Загружаем предопределённые кластеры из clusterization.csv, не меняя формат
+        // Загружаем предопределённые кластеры из clusterization.csv, игнорируя заголовки
         async function loadPredefinedClusters() {
             const response = await fetch('clusterization.csv');
             const text = await response.text();
             Papa.parse(text, {
                 complete: function(results) {
                     predefinedClusters = {};
-                    results.data.forEach(row => {
+                    const rows = results.data.slice(1); // Пропускаем первую строку (заголовки)
+                    rows.forEach(row => {
                         const gene = row[0];
                         const cluster = row[1];
                         if (!predefinedClusters[cluster]) {
@@ -84,6 +84,7 @@
                         predefinedClusters[cluster].push(gene);
                     });
                     populateClusterDropdown();
+                    displayGenes('0'); // Отображаем Cluster 0 по умолчанию
                 },
                 header: false
             });
@@ -170,3 +171,4 @@
     </script>
 </body>
 </html>
+
