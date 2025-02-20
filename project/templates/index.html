@@ -1,15 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML to Excel</title>
+    <title>HTML Parser</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify-html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Введите HTML-разметку</h1>
-    <form method="POST">
-        <textarea name="html_content" rows="20" cols="100" placeholder="Вставьте HTML-разметку здесь..."></textarea><br><br>
-        <button type="submit">Скачать Excel</button>
-    </form>
+    <h1>HTML Parser</h1>
+    <textarea id="htmlInput" placeholder="Вставьте HTML-разметку сюда"></textarea>
+    <button onclick="processHTML()">Обработать и скачать Excel</button>
+
+    <script>
+        function processHTML() {
+            const htmlContent = document.getElementById('htmlInput').value;
+            
+            // Создаем временный div для парсинга
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlContent;
+            
+            // Находим все ячейки с col-id="query"
+            const queryCells = tempDiv.querySelectorAll('div[col-id="query"] span.ag-cell-value');
+            const keyQueries = Array.from(queryCells).map(cell => cell.textContent.trim());
+            
+            // Находим все ячейки с col-id="wb_frequencies_month"
+            const freqCells = tempDiv.querySelectorAll('div[col-id="wb_frequencies_month"] span.ag-cell-value');
+            const freqQueries = Array.from(freqCells).map(cell => cell.textContent.trim().replace(/\s/g, ''));
+            
+            // Находим все ячейки с aria-colindex="6"
+            const positionCells = tempDiv.querySelectorAll('div[aria-colindex="6"]');
+            const pairs = Array.from(positionCells).slice(1).map(cell => {
+                const boostContainer = cell.querySelector('.marketpapa-boost-info-container');
+                if (boostContainer) {
+                    const numbers = boostContainer.querySelectorAll('span');
+                    return numbers.length >= 3 ? numbers[2].textContent.trim() : '-';
+                }
+                
+                const singleNumberSpan = cell.querySelector('span[data-tip]');
+                return singleNumberSpan ? singleNumberSpan.textContent.trim().split(' ')[0] : '-';
+            });
+            
+            // Создаем Excel файл
+            const data = keyQueries.map((key, index) => ({
+                key: key,
+                freq: freqQueries[index],
+                pos: pairs[index]
+            }));
+            
+            const worksheet = XLSX.utils.json_to_sheet(data);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+            
+            // Скачиваем файл
+            XLSX.writeFile(workbook, '123.xlsx');
+        }
+    </script>
 </body>
 </html>
