@@ -469,11 +469,11 @@
             if (this.textContent.trim() === 'Рецепты') {
                 event.preventDefault(); // Это отменит переход по ссылке
                 const subMenu = this.closest('li').querySelector('ul');
-                // Если подменю скрыто, открываем его
-                if (subMenu && subMenu.style.display !== 'block') {
-                    subMenu.style.display = 'block';
+                // Проверяем, если подменю закрыто
+                if (subMenu && subMenu.style.display === 'none') {
+                    subMenu.style.display = 'block'; // Открываем подменю
                 } else if (subMenu) {
-                    subMenu.style.display = 'none'; // Закрываем подменю, если оно открыто
+                    subMenu.style.display = 'none'; // Закрываем подменю
                 }
             }
         });
@@ -483,7 +483,7 @@
         item.addEventListener('mouseenter', function() {
             // Открываем подменю при наведении
             const subMenu = this.querySelector('ul');
-            if (subMenu) {
+            if (subMenu && subMenu.style.display !== 'block') {
                 subMenu.style.display = 'block';
             }
         });
@@ -491,12 +491,13 @@
         item.addEventListener('mouseleave', function() {
             // Закрываем подменю при уходе мыши
             const subMenu = this.querySelector('ul');
-            if (subMenu) {
+            if (subMenu && subMenu.style.display === 'block') {
                 subMenu.style.display = 'none';
             }
         });
     });
 </script>
+
 
 
 
