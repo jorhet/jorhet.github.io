@@ -458,20 +458,40 @@
             }
         };
     </script>
-    <script>
+<script>
     // Получаем все ссылки внутри выпадающего меню
     const recipeLinks = document.querySelectorAll('nav ul li ul li a');
+    const mainMenuItems = document.querySelectorAll('nav ul li');
 
     recipeLinks.forEach(link => {
         link.addEventListener('click', function() {
-            // Закрываем выпадающее меню при клике на рецепт
+            // Закрываем подменю, только если оно было открыто
             const subMenu = this.closest('ul');
             if (subMenu) {
                 subMenu.style.display = 'none';
             }
         });
     });
+
+    mainMenuItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            // Открываем подменю при наведении
+            const subMenu = this.querySelector('ul');
+            if (subMenu) {
+                subMenu.style.display = 'block';
+            }
+        });
+
+        item.addEventListener('mouseleave', function() {
+            // Закрываем подменю при уходе мыши
+            const subMenu = this.querySelector('ul');
+            if (subMenu) {
+                subMenu.style.display = 'none';
+            }
+        });
+    });
 </script>
+
 
 </body>
 </html>
