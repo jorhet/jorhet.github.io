@@ -458,5 +458,20 @@
             }
         };
     </script>
+    <script>
+    // Получаем все ссылки внутри выпадающего меню
+    const recipeLinks = document.querySelectorAll('nav ul li ul li a');
+
+    recipeLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // Закрываем выпадающее меню при клике на рецепт
+            const subMenu = this.closest('ul');
+            if (subMenu) {
+                subMenu.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
