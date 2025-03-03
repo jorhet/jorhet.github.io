@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Специально для вас мы собрали лучшие рецепты для ветчинницы: буженина, ветчина, колбаса и многое другое. Руководство по эксплуатации внутри!">
+    <title>Рецепты для ветчинницы от GGStore – Вкусные и простые блюда</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            color: #2d2d2d;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(120deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        nav {
+            background: #ffffff;
+            padding: 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            max-width: 1000px;
+            margin: 0 auto;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav ul li {
+            position: relative;
+            margin: 0 1.5rem;
+        }
+
+        nav ul ul {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+            min-width: 200px;
+        }
+
+        nav ul li:hover > ul {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        nav a {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #4ecdc4;
+            transform: translateY(-2px);
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            background: #fff;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        h2 {
+            color: #ff6b6b;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: #4ecdc4;
+            border-radius: 2px;
+        }
+
+        h3 {
+            color: #2d2d2d;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            border-left: 5px solid #ff6b6b;
+            padding-left: 1rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: #555;
+        }
+
+        ul li, ol li {
+            margin: 0.5rem 0;
+            position: relative;
+        }
+
+        ul li::before {
+            content: '•';
+            color: #ff6b6b;
+            font-size: 1.5rem;
+            position: absolute;
+            left: -1.5rem;
+        }
+
+        .warning {
+            color: #d63031;
+            font-weight: 600;
+            background: #ffeaa7;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        strong {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        #to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 1.5rem;
+            display: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #to-top:hover {
+            background: #4ecdc4;
+            transform: scale(1.1) rotate(360deg);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            header p { font-size: 1.1rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+            nav ul { flex-direction: column; align-items: center; }
+            nav ul li { margin: 0.8rem 0; }
+            section { padding: 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 2rem 1rem; }
+            header h1 { font-size: 1.8rem; }
+            header p { font-size: 0.9rem; }
+            main { padding: 0 1rem; }
+            section { margin-bottom: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Рецепты для ветчинницы от GGStore</h1>
+        <p>Специально для вас мы выбрали самые вкусные и интересные рецепты</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#manual">Руководство</a></li>
+            <li><a href="#recipes">Рецепты</a>
+                <ul>
+                    <li><a href="#buzhenina">Буженина</a></li>
+                    <li><a href="#ukrainian">Ветчина "Украинская"</a></li>
+                    <li><a href="#kupecheskaya">Ветчина "Купеческая"</a></li>
+                    <li><a href="#tsarskaya">Ветчина "Царская"</a></li>
+                    <li><a href="#beef-sudak">Ветчина из говядины и судака</a></li>
+                    <li><a href="#beef-cream">Ветчина из говядины со сливками</a></li>
+                    <li><a href="#classic">Классическая ветчина</a></li>
+                    <li><a href="#chicken-turkey">Ветчина с курицей и индейкой</a></li>
+                    <li><a href="#doktor">Колбаса "Докторская"</a></li>
+                    <li><a href="#chicken-roll">Куриный рулет</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="manual">
+            <h2>Руководство по эксплуатации</h2>
+            <p>Перед первым использованием ветчинницы тщательно вымойте ее в теплой мыльной воде или в посудомоечной машине, тщательно промойте и высушите.</p>
+            <ol>
+                <li>Подготовьте ингредиенты в соответствии с рецептом.</li>
+                <li>Установите корпус изделия на ровную твердую поверхность, равномерно заполните корпус ветчинницы подготовленными ингредиентами и тщательно их утрамбуйте, чтобы не оставалось пустот.</li>
+                <li>Вставьте нажимную пластину с прикрепленной пружиной. Нажимная пластина должна давить на мясо, а пружина должна быть направлена вверх. Закройте ветчинницу крышкой и установите термометр.</li>
+                <li>Поставьте ветчинницу в кастрюлю с водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                <li>Начните приготовление в соответствии с рецептом. Во время приготовления используйте термометр из комплекта, чтобы следить за готовностью продукта.</li>
+                <li>По окончании приготовления остудите ветчинницу до комнатной температуры, после чего уберите в холодильник минимум на 3 часа.</li>
+                <li><span class="warning">Будьте осторожны! После приготовления корпус ветчинницы очень горячий.</span></li>
+                <li>Не разбирайте ветчинницу, пока ее содержимое полностью не остынет.</li>
+                <li>После того как продукт остыл, аккуратно извлеките готовый продукт.</li>
+                <li>Чтобы легче было извлечь готовый продукт, обдайте корпус ветчинницы кипятком.</li>
+            </ol>
+            <h3>Уход за изделием</h3>
+            <ul>
+                <li>Сразу после использования промойте корпус и съемные части изделия теплой водой с мягким моющим средством для мытья посуды (можете воспользоваться посудомоечной машиной).</li>
+                <li>Не мойте термометр в посудомоечной машине.</li>
+            </ul>
+        </section>
+
+        <section id="recipes">
+            <h2>Рецепты</h2>
+
+            <section id="buzhenina">
+                <h3>Буженина</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Свинина (шея) - 1 кг</li>
+                    <li>Чеснок - 10 г</li>
+                    <li>Горчица зернистая - 10 г</li>
+                    <li>Соль, специи</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Промыть мясо.</li>
+                    <li>Сделать в мясе надрезы и нашпиговать их чесноком.</li>
+                    <li>Натереть мясо солью, горчицей, специями и оставить мариноваться на 3 часа.</li>
+                    <li>Выложить мясо в ветчинницу.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+
+            <section id="ukrainian">
+                <h3>Ветчина "Украинская"</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Говядина (филе) - 700 г</li>
+                    <li>Сало свиное - 130 г</li>
+                    <li>Желатин (сухой) - 15 г</li>
+                    <li>Соевый соус - 5 мл</li>
+                    <li>Соль, специи</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Промыть мясо.</li>
+                    <li>Пропустить мясо через мясорубку.</li>
+                    <li>Сало нарезать маленькими кубиками.</li>
+                    <li>Все тщательно смешать и выложить в ветчинницу.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2,5 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+
+            <section id="kupecheskaya">
+                <h3>Ветчина "Купеческая"</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Говядина (филе) - 400 г</li>
+                    <li>Свинина (филе) - 400 г</li>
+                    <li>Фарш (домашний) - 300 г</li>
+                    <li>Яйцо куриное - 50 г (1 шт.)</li>
+                    <li>Желатин (сухой) - 15 г</li>
+                    <li>Чеснок - 10 г</li>
+                    <li>Сухое молоко - 10 г</li>
+                    <li>Мускатный орех - 5 г</li>
+                    <li>Соль, специи</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Промыть мясо.</li>
+                    <li>Нарезать мясо крупными кубиками.</li>
+                    <li>Измельчить чеснок и тщательно смешать все ингредиенты вместе.</li>
+                    <li>Выложить фарш в ветчинницу.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+
+            <section id="tsarskaya">
+                <h3>Ветчина "Царская"</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Свинина (филе) - 500 г</li>
+                    <li>Говядина (филе) - 500 г</li>
+                    <li>Желатин (сухой) - 15 г</li>
+                    <li>Чеснок - 6 г</li>
+                    <li>Мускатный орех - 3 г</li>
+                    <li>Перец черный, соль</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Мясо промыть.</li>
+                    <li>Мясо крупно нарезать и измельчить чеснок.</li>
+                    <li>Тщательно перемешать все ингредиенты.</li>
+                    <li>Выложить мясо в ветчинницу.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+
+            <section id="beef-sudak">
+                <h3>Ветчина из говядины и судака</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Говядина (филе) - 750 г</li>
+                    <li>Судак (филе) - 300 г</li>
+                    <li>Лук репчатый - 75 г</li>
+                    <li>Оливки - 50 г</li>
+                    <li>Сельдерей (стебель) - 50 г</li>
+                    <li>Спаржа - 30 г</li>
+                    <li>Желатин (сухой) - 15 г</li>
+                    <li>Соль, специи</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Мясо и рыбу промыть.</li>
+                    <li>Мясо, рыбу и лук пропустить через мясорубку. В фарш добавить оливки, соль, специи, желатин, перемешать до однородной массы.</li>
+                    <li>Нарезать сельдерей вдоль. Выложить фарш в ветчинницу.</li>
+                    <li>Нашпиговать фарш сельдереем и спаржей.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2,5 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+
+            <section id="beef-cream">
+                <h3>Ветчина из говядины со сливками</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Говядина (филе) - 1,3 кг</li>
+                    <li>Сливки (22%) - 90 мл</li>
+                    <li>Масло сливочное - 50 г</li>
+                    <li>Лук зеленый - 20 г</li>
+                    <li>Чеснок - 20 г</li>
+                    <li>Желатин (сухой) - 15 г</li>
+                    <li>Соевый соус - 5 мл</li>
+                    <li>Соль, специи</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Мясо промыть и нарезать маленькими кубиками.</li>
+                    <li>Измельчить лук и чеснок. Масло растопить.</li>
+                    <li>Тщательно все смешать и оставить мариноваться на 2 часа.</li>
+                    <li>Выложить мясо в ветчинницу.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2,5 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+
+            <section id="classic">
+                <h3>Классическая ветчина</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Свинина - 800 г</li>
+                    <li>Мясной фарш - 300 г</li>
+                    <li>Яйцо - 1 шт.</li>
+                    <li>Сухое молоко - 10 г</li>
+                    <li>Чеснок - 20 г</li>
+                    <li>Желатин - 15 г</li>
+                    <li>Соль, специи</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Мясо промыть.</li>
+                    <li>Нарезать мясо маленькими кубиками. Измельчить чеснок.</li>
+                    <li>Перемешать все ингредиенты до однородности.</li>
+                    <li>Выложить мясо в ветчинницу.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+
+            <section id="chicken-turkey">
+                <h3>Ветчина с курицей и индейкой</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Филе индейки - 750 г</li>
+                    <li>Куриное филе - 375 г</li>
+                    <li>Яйца - 1 шт.</li>
+                    <li>Желатин - 8 г</li>
+                    <li>Соль, специи, мускатный орех</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Мясо промыть.</li>
+                    <li>Филе индейки и курицы нарезать маленькими кубиками.</li>
+                    <li>Добавить остальные ингредиенты и тщательно перемешать.</li>
+                    <li>Выложить мясо в ветчинницу.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+
+            <section id="doktor">
+                <h3>Колбаса "Докторская"</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Говядина - 200 г</li>
+                    <li>Свинина - 600 г</li>
+                    <li>Грудинка - 480 г</li>
+                    <li>Яйцо - 1 шт.</li>
+                    <li>Соль, специи</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Мясо промыть.</li>
+                    <li>Пропустить мясо через мясорубку и переложить в блендер.</li>
+                    <li>Взбить фарш в блендере со всеми ингредиентами.</li>
+                    <li>Выложить фарш в ветчинницу.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+
+            <section id="chicken-roll">
+                <h3>Куриный рулет</h3>
+                <strong>Ингредиенты:</strong>
+                <ul>
+                    <li>Куриное филе - 400 г</li>
+                    <li>Куриные бедрышки - 800 г</li>
+                    <li>Желатин - 15 г</li>
+                    <li>Чеснок - 6 г</li>
+                    <li>Соль, специи</li>
+                </ul>
+                <strong>Приготовление:</strong>
+                <ol>
+                    <li>Мясо промыть.</li>
+                    <li>Мясо мелко порубить.</li>
+                    <li>Перемешать тщательно все ингредиенты.</li>
+                    <li>Выложить мясо в ветчинницу.</li>
+                    <li>Ветчинницу поместить в кастрюлю, наполненную водой. Уровень воды должен быть выше или такой же, как уровень ингредиентов внутри ветчинницы.</li>
+                    <li>Готовить 2 часа при температуре от 75 до 85°C.</li>
+                </ol>
+            </section>
+        </section>
+    </main>
+
+    <a href="#" id="to-top">↑</a>
+
+    <script>
+        const toTop = document.getElementById('to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                toTop.style.display = 'block';
+            } else {
+                toTop.style.display = 'none';
+            }
+        });
+
+        toTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
