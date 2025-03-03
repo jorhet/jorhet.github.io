@@ -5,238 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Специально для вас мы собрали лучшие рецепты для ветчинницы: буженина, ветчина, колбаса и многое другое. Руководство по эксплуатации внутри!">
     <title>Рецепты для ветчинницы от GGStore – Вкусные и простые блюда</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
             background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
             color: #2d2d2d;
-            line-height: 1.7;
-            overflow-x: hidden;
+            line-height: 1.6;
         }
-
         header {
-            background: linear-gradient(120deg, #ff6b6b, #4ecdc4);
-            color: white;
-            padding: 4rem 2rem;
+            background: linear-gradient(120deg, #ff6f61, #de4d4d);
+            padding: 40px 20px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: rotate(30deg);
-            pointer-events: none;
-        }
-
         header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 1s ease-in;
+            margin: 0;
+            font-size: 2.5em;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-
         header p {
-            font-size: 1.3rem;
-            font-weight: 400;
+            margin: 15px 0;
+            font-size: 1.3em;
+            color: #fff;
             opacity: 0.9;
-            margin-top: 0.5rem;
         }
-
+        header img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
         nav {
-            background: #ffffff;
-            padding: 1.5rem;
+            padding: 20px;
+            background-color: #fff;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 15px 15px;
         }
-
         nav ul {
-            max-width: 1000px;
-            margin: 0 auto;
             list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            padding: 0;
+            margin: 0;
+            text-align: center;
         }
-
         nav ul li {
-            position: relative;
-            margin: 0 1.5rem;
+            display: inline-block;
+            margin: 0 15px;
         }
-
+        nav ul li a {
+            text-decoration: none;
+            color: #ff6f61;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #de4d4d;
+            text-decoration: underline;
+        }
         nav ul ul {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #fff;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             display: none;
-            min-width: 200px;
+            position: absolute;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-
         nav ul li:hover > ul {
             display: block;
-            animation: slideIn 0.3s ease;
         }
-
-        nav a {
-            color: #ff6b6b;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: color 0.3s ease, transform 0.3s ease;
+        nav ul ul li {
+            display: block;
+            margin: 10px 0;
         }
-
-        nav a:hover {
-            color: #4ecdc4;
-            transform: translateY(-2px);
-        }
-
         main {
             max-width: 1000px;
-            margin: 3rem auto;
-            padding: 0 1.5rem;
+            margin: 30px auto;
+            padding: 0 20px;
         }
-
         section {
-            background: #fff;
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            background-color: #fff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         section:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
-
         h2 {
-            color: #ff6b6b;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            position: relative;
-            display: inline-block;
+            color: #ff6f61;
+            border-bottom: 3px solid #ff6f61;
+            padding-bottom: 8px;
+            font-size: 1.8em;
         }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60%;
-            height: 4px;
-            background: #4ecdc4;
-            border-radius: 2px;
-        }
-
         h3 {
             color: #2d2d2d;
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem;
-            border-left: 5px solid #ff6b6b;
-            padding-left: 1rem;
+            margin-top: 20px;
+            font-size: 1.5em;
         }
-
         ul, ol {
-            margin: 1rem 0 1rem 2rem;
-            color: #555;
+            margin: 15px 0 15px 25px;
         }
-
-        ul li, ol li {
-            margin: 0.5rem 0;
-            position: relative;
-        }
-
-        ul li::before {
-            content: '•';
-            color: #ff6b6b;
-            font-size: 1.5rem;
-            position: absolute;
-            left: -1.5rem;
-        }
-
         .warning {
-            color: #d63031;
-            font-weight: 600;
-            background: #ffeaa7;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
+            font-weight: bold;
+            color: #e63946;
+            background-color: #ffe6e6;
+            padding: 5px 10px;
+            border-radius: 5px;
             display: inline-block;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        strong {
-            color: #ff6b6b;
-            font-weight: 600;
+        .recipe-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-
         #to-top {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: #ff6b6b;
-            color: white;
-            padding: 1rem;
+            bottom: 30px;
+            right: 30px;
+            background-color: #ff6f61;
+            color: #fff;
+            padding: 12px 20px;
             border-radius: 50%;
             text-decoration: none;
-            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
             display: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
         #to-top:hover {
-            background: #4ecdc4;
-            transform: scale(1.1) rotate(360deg);
+            background-color: #de4d4d;
+            transform: scale(1.1);
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            header h1 { font-size: 2.2rem; }
-            header p { font-size: 1.1rem; }
-            h2 { font-size: 2rem; }
-            h3 { font-size: 1.5rem; }
-            nav ul { flex-direction: column; align-items: center; }
-            nav ul li { margin: 0.8rem 0; }
-            section { padding: 1.5rem; }
-        }
-
-        @media (max-width: 480px) {
-            header { padding: 2rem 1rem; }
-            header h1 { font-size: 1.8rem; }
-            header p { font-size: 0.9rem; }
-            main { padding: 0 1rem; }
-            section { margin-bottom: 1.5rem; }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8em; }
+            header p { font-size: 1em; }
+            nav ul li { display: block; margin: 10px 0; }
+            main { padding: 0 10px; }
         }
     </style>
 </head>
@@ -244,11 +163,12 @@
     <header>
         <h1>Рецепты для ветчинницы от GGStore</h1>
         <p>Специально для вас мы выбрали самые вкусные и интересные рецепты</p>
+        <img src="images/header.jpg" alt="Ветчинница и блюда">
     </header>
 
     <nav>
         <ul>
-            <li><a href="#manual">Руководство</a></li>
+            <li><a href="#manual">Руководство по эксплуатации</a></li>
             <li><a href="#recipes">Рецепты</a>
                 <ul>
                     <li><a href="#buzhenina">Буженина</a></li>
@@ -294,6 +214,7 @@
 
             <section id="buzhenina">
                 <h3>Буженина</h3>
+                <img src="images/buzhenina.jpg" alt="Буженина" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Свинина (шея) - 1 кг</li>
@@ -314,6 +235,7 @@
 
             <section id="ukrainian">
                 <h3>Ветчина "Украинская"</h3>
+                <img src="images/ukrainian.jpg" alt="Ветчина Украинская" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Говядина (филе) - 700 г</li>
@@ -335,6 +257,7 @@
 
             <section id="kupecheskaya">
                 <h3>Ветчина "Купеческая"</h3>
+                <img src="images/kupecheskaya.jpg" alt="Ветчина Купеческая" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Говядина (филе) - 400 г</li>
@@ -360,6 +283,7 @@
 
             <section id="tsarskaya">
                 <h3>Ветчина "Царская"</h3>
+                <img src="images/tsarskaya.jpg" alt="Ветчина Царская" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Свинина (филе) - 500 г</li>
@@ -382,6 +306,7 @@
 
             <section id="beef-sudak">
                 <h3>Ветчина из говядины и судака</h3>
+                <img src="images/beef-sudak.jpg" alt="Ветчина из говядины и судака" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Говядина (филе) - 750 г</li>
@@ -406,6 +331,7 @@
 
             <section id="beef-cream">
                 <h3>Ветчина из говядины со сливками</h3>
+                <img src="images/beef-cream.jpg" alt="Ветчина из говядины со сливками" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Говядина (филе) - 1,3 кг</li>
@@ -430,6 +356,7 @@
 
             <section id="classic">
                 <h3>Классическая ветчина</h3>
+                <img src="images/classic.jpg" alt="Классическая ветчина" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Свинина - 800 г</li>
@@ -453,6 +380,7 @@
 
             <section id="chicken-turkey">
                 <h3>Ветчина с курицей и индейкой</h3>
+                <img src="images/chicken-turkey.jpg" alt="Ветчина с курицей и индейкой" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Филе индейки - 750 г</li>
@@ -474,6 +402,7 @@
 
             <section id="doktor">
                 <h3>Колбаса "Докторская"</h3>
+                <img src="images/doktor.jpg" alt="Колбаса Докторская" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Говядина - 200 г</li>
@@ -495,6 +424,7 @@
 
             <section id="chicken-roll">
                 <h3>Куриный рулет</h3>
+                <img src="images/chicken-roll.jpg" alt="Куриный рулет" class="recipe-img">
                 <strong>Ингредиенты:</strong>
                 <ul>
                     <li>Куриное филе - 400 г</li>
@@ -519,28 +449,14 @@
     <a href="#" id="to-top">↑</a>
 
     <script>
-        const toTop = document.getElementById('to-top');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
+        window.onscroll = function() {
+            let toTop = document.getElementById('to-top');
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
                 toTop.style.display = 'block';
             } else {
                 toTop.style.display = 'none';
             }
-        });
-
-        toTop.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
+        };
     </script>
 </body>
 </html>
