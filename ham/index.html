@@ -459,41 +459,24 @@
         };
     </script>
 <script>
-    // Получаем все ссылки, включая "Рецепты"
-    const recipeLinks = document.querySelectorAll('nav ul li a');
-    const mainMenuItems = document.querySelectorAll('nav ul li');
+    // Получаем элемент "Рецепты" и его подменю
+    const recipesLink = document.querySelector('nav ul li a[href="#recipes"]'); // Предполагаем, что у ссылки есть href="#recipes"
+    const subMenu = recipesLink.closest('li').querySelector('ul');
 
-    recipeLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            // Проверяем, если ссылка "Рецепты", то отменяем переход
-            if (this.textContent.trim() === 'Рецепты') {
-                event.preventDefault(); // Это отменит переход по ссылке
-                const subMenu = this.closest('li').querySelector('ul');
-                // Проверяем, если подменю закрыто
-                if (subMenu && subMenu.style.display === 'none') {
-                    subMenu.style.display = 'block'; // Открываем подменю
-                } else if (subMenu) {
-                    subMenu.style.display = 'none'; // Закрываем подменю
-                }
-            }
-        });
+    // Обработчик клика на "Рецепты"
+    recipesLink.addEventListener('click', function(event) {
+        event.preventDefault(); // Останавливаем стандартное поведение ссылки
+        if (subMenu.style.display === 'block') {
+            subMenu.style.display = 'none'; // Закрываем подменю
+        } else {
+            subMenu.style.display = 'block'; // Открываем подменю
+        }
     });
 
-    mainMenuItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            // Открываем подменю при наведении
-            const subMenu = this.querySelector('ul');
-            if (subMenu && subMenu.style.display !== 'block') {
-                subMenu.style.display = 'block';
-            }
-        });
-
-        item.addEventListener('mouseleave', function() {
-            // Закрываем подменю при уходе мыши
-            const subMenu = this.querySelector('ul');
-            if (subMenu && subMenu.style.display === 'block') {
-                subMenu.style.display = 'none';
-            }
+    // Закрытие подменю при клике на рецепт
+    subMenu.querySelectorAll('a').forEach(recipeLink => {
+        recipeLink.addEventListener('click', function() {
+            subMenu.style.display = 'none'; // Закрываем подменю при выборе рецепта
         });
     });
 </script>
