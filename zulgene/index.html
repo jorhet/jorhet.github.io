@@ -1,75 +1,76 @@
-import React, { useState, useEffect } from "react";
-import Papa from "papaparse";
-import { Card, CardContent } from "@/components/ui/card";
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Просмотр наборов генов</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 960px; margin: auto; padding: 20px; }
+    select, textarea { width: 100%; padding: 10px; margin-bottom: 20px; }
+    .description-boxes { display: flex; gap: 20px; }
+    .box { flex: 1; }
+    textarea { height: 300px; resize: none; }
+    .card { border: 1px solid #ccc; border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Просмотр наборов генов</h1>
 
-export default function GeneSetViewer() {
-  const [data, setData] = useState([]);
-  const [selectedName, setSelectedName] = useState("");
+  <select id="geneSelect">
+    <option value="">Выберите набор генов</option>
+  </select>
 
-  useEffect(() => {
-    fetch("/validation.csv")
+  <div id="info" style="display: none;">
+    <div class="card">
+      <p><strong>Гены:</strong> <span id="genes"></span></p>
+      <p><strong>Краткое описание (истинное):</strong> <span id="brief"></span></p>
+      <p><strong>Полное описание (истинное):</strong> <span id="full"></span></p>
+    </div>
+
+    <div class="description-boxes">
+      <div class="box">
+        <strong>GPT:</strong>
+        <textarea id="gpt" readonly></textarea>
+      </div>
+      <div class="box">
+        <strong>ZulGene:</strong>
+        <textarea id="zul" readonly></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <script>
+    let data = [];
+
+    fetch('validation.csv')
       .then(res => res.text())
       .then(text => {
         Papa.parse(text, {
           header: true,
           skipEmptyLines: true,
-          complete: results => setData(results.data)
+          complete: results => {
+            data = results.data;
+            const select = document.getElementById('geneSelect');
+            data.forEach(row => {
+              const option = document.createElement('option');
+              option.value = row.name;
+              option.textContent = row.name;
+              select.appendChild(option);
+            });
+          }
         });
       });
-  }, []);
 
-  const selectedSet = data.find(row => row.name === selectedName);
-
-  return (
-    <div className="max-w-4xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold">Просмотр наборов генов</h1>
-
-      <Select onValueChange={setSelectedName}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Выберите набор генов" />
-        </SelectTrigger>
-        <SelectContent>
-          {data.map((row, idx) => (
-            <SelectItem key={idx} value={row.name}>{row.name}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      {selectedSet && (
-        <div className="space-y-4">
-          <Card>
-            <CardContent className="space-y-2 pt-4">
-              <div>
-                <strong>Гены:</strong> {selectedSet.genes}
-              </div>
-              <div>
-                <strong>Краткое описание (истинное):</strong> {selectedSet.brief}
-              </div>
-              <div>
-                <strong>Полное описание (истинное):</strong> {selectedSet.full}
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card>
-              <CardContent className="pt-4">
-                <strong className="block mb-2">GPT</strong>
-                <Textarea className="w-full h-64" readOnly value={selectedSet.GPT} />
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="pt-4">
-                <strong className="block mb-2">ZulGene</strong>
-                <Textarea className="w-full h-64" readOnly value={selectedSet.ZulGene} />
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+    document.getElementById('geneSelect').addEventListener('change', function () {
+      const selected = data.find(row => row.name === this.value);
+      if (!selected) return;
+      document.getElementById('info').style.display = 'block';
+      document.getElementById('genes').textContent = selected.genes;
+      document.getElementById('brief').textContent = selected.brief;
+      document.getElementById('full').textContent = selected.full;
+      document.getElementById('gpt').value = selected.GPT;
+      document.getElementById('zul').value = selected.ZulGene;
+    });
+  </script>
+</body>
+</html>
