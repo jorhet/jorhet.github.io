@@ -91,6 +91,7 @@
         .step {
             display: flex;
             margin-bottom: 20px;
+            align-items: flex-start;
         }
         .step-number {
             background: var(--primary);
@@ -103,6 +104,17 @@
             justify-content: center;
             margin-right: 15px;
             flex-shrink: 0;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-image {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .os-tabs {
             display: flex;
@@ -132,12 +144,42 @@
             background: var(--dark);
             color: white;
         }
+        .header-image {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .main-image {
+            width: 510px;
+            height: 510px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #ddd;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-content {
+            flex: 1;
+        }
+        .faq-item h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
             }
             h1 {
                 font-size: 2rem;
+            }
+            .main-image {
+                width: 300px;
+                height: 300px;
+            }
+            .step-image {
+                width: 200px;
+                height: 133px;
             }
         }
     </style>
@@ -147,6 +189,9 @@
         <div class="container">
             <h1>GGStore Wi-Fi/Bluetooth Adapter</h1>
             <p>Высокоскоростной двухдиапазонный адаптер для стабильного соединения</p>
+            <div class="header-image">
+                <img src="images/main-image.jpg" alt="Main Adapter Image" class="main-image">
+            </div>
         </div>
     </header>
 
@@ -181,30 +226,33 @@
                 
                 <div class="step">
                     <div class="step-number">1</div>
-                    <div>
+                    <div class="step-content">
                         <p>Вставьте адаптер в USB порт ПК.</p>
                         <p>В Windows 10,11 драйвера устанавливаются автоматически. Если этого не произошло, установите драйвера вручную.</p>
                         <p class="important">В Windows 7 включите службу автонастройки WLAN, без нее адаптер работать не будет.</p>
+                        <img src="images/step1-windows.jpg" alt="Step 1 Windows" class="step-image">
                     </div>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">2</div>
-                    <div>
+                    <div class="step-content">
                         <p>Для установки драйверов вручную:</p>
                         <ul>
-                            <li>Вставьте диск в дисковод или скачайте драйвера по ссылке (QR код выше)</li>
+                            <li>Скачайте драйвера по ссылке: <a href="https://disk.yandex.ru/d/7doc8F8fcRIJZQ/WIFI_Driver" style="color: var(--primary);">Скачать драйвера</a></li>
                             <li>Выберите папку с нужной версией Windows</li>
                             <li>Скачайте ее на компьютер (при установке напрямую с диска драйвера могут установиться некорректно)</li>
                         </ul>
+                        <img src="images/step2-windows.jpg" alt="Step 2 Windows" class="step-image">
                     </div>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">3</div>
-                    <div>
+                    <div class="step-content">
                         <p>В скачанной папке найдите установочный файл <strong>Setup</strong> и запустите установку.</p>
                         <p>После установки перезагрузите компьютер.</p>
+                        <img src="images/step3-windows.jpg" alt="Step 3 Windows" class="step-image">
                     </div>
                 </div>
                 
@@ -215,6 +263,7 @@
                         <li>Зайдите в Диспетчер устройств → Сетевые адаптеры → Realtek Wireless → удалите устройство → перезагрузите компьютер → вставьте адаптер заново.</li>
                         <li>Для Bluetooth: Диспетчер устройств → Bluetooth → удалите устройство Bluetooth 4.0 (с галочкой "Удалить программы драйверов") → перезагрузите компьютер.</li>
                     </ol>
+                    <img src="images/windows-update-fix.jpg" alt="Windows Update Fix" class="step-image">
                 </div>
             </div>
             
@@ -223,39 +272,43 @@
                 
                 <div class="step">
                     <div class="step-number">1</div>
-                    <div>
-                        <p>Скачайте папку с драйверами на Ваш Mac</p>
+                    <div class="step-content">
+                        <p>Скачайте папку с драйверами на Ваш Mac: <a href="https://disk.yandex.ru/d/7doc8F8fcRIJZQ/WIFI_Driver" style="color: var(--primary);">Скачать драйвера</a></p>
+                        <img src="images/step1-macos.jpg" alt="Step 1 MacOS" class="step-image">
                     </div>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">2</div>
-                    <div>
+                    <div class="step-content">
                         <p>Запустите файл <strong>Install.pkg</strong>, далее - Agree - Install.</p>
+                        <img src="images/step2-macos.jpg" alt="Step 2 MacOS" class="step-image">
                     </div>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">3</div>
-                    <div>
+                    <div class="step-content">
                         <p>Введите пароль входа в систему (если он задан) и нажмите Software. Продолжите установку, нажав Continue Installation.</p>
                         <p>После установки перезагрузите компьютер и подключитесь к вашей сети Wi-Fi.</p>
+                        <img src="images/step3-macos.jpg" alt="Step 3 MacOS" class="step-image">
                     </div>
                 </div>
                 
                 <h3>Установка и подключение Bluetooth</h3>
-                <p>Драйвера на Bluetooth скачиваются и устанавливаются аналогично драйверам WiFi.</p>
+                <p>Драйвера на Bluetooth скачиваются и устанавливаются аналогично драйверам WiFi: <a href="https://disk.yandex.ru/d/7doc8F8fcRIJZQ/WIFI_Driver" style="color: var(--primary);">Скачать драйвера</a></p>
                 <p class="important">Перед установкой убедитесь, что в диспетчере устройств отсутствует устройство Realtek Bluetooth 4.0 (удалите его, если обнаружено).</p>
                 
                 <div class="step">
                     <div class="step-number">4</div>
-                    <div>
+                    <div class="step-content">
                         <p>После установки:</p>
                         <ul>
                             <li>На нижней панели нажмите на значок Bluetooth</li>
                             <li>Выберите «Добавление устройства Bluetooth»</li>
                             <li>Выберите устройство из списка для сопряжения</li>
                         </ul>
+                        <img src="images/step4-macos-bluetooth.jpg" alt="Step 4 MacOS Bluetooth" class="step-image">
                     </div>
                 </div>
                 
@@ -264,6 +317,7 @@
                     <ul>
                         <li>Служба поддержки Bluetooth ЗАПУЩЕНА (тип запуска - АВТОМАТИЧЕСКИ)</li>
                     </ul>
+                    <img src="images/bluetooth-fix-macos.jpg" alt="Bluetooth Fix MacOS" class="step-image">
                 </div>
             </div>
         </section>
@@ -298,12 +352,42 @@
         </section>
         
         <section class="card">
+            <h2>❓ Частые вопросы</h2>
+            <div class="faq-item">
+                <div class="faq-content">
+                    <h3>Почему адаптер не видит сеть 5 ГГц?</h3>
+                    <p>Убедитесь, что ваш роутер поддерживает диапазон 5 ГГц и канал настроен на значение от 36. Попробуйте обновить драйвера адаптера.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-content">
+                    <h3>Bluetooth не подключается к устройству, что делать?</h3>
+                    <p>Проверьте, что служба Bluetooth запущена (тип запуска - автоматически). Удалите устройство Realtek Bluetooth 4.0 в диспетчере устройств и переустановите драйвера.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-content">
+                    <h3>Как улучшить скорость Wi-Fi?</h3>
+                    <p>Подключитесь к диапазоне 5 ГГц, используйте канал 149 или 151, установите ширину канала на 80 МГц и разместите адаптер в прямой видимости роутера.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-content">
+                    <h3>Можно ли использовать адаптер на Linux?</h3>
+                    <p>На данный момент адаптер официально поддерживает Windows и MacOS. Для Linux могут потребоваться дополнительные драйвера, обратитесь в поддержку.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card">
             <h2>🆘 Техническая поддержка</h2>
             <p>Если у вас остались вопросы или возникли проблемы с адаптером, мы всегда готовы помочь!</p>
             <div class="success">
                 <p><strong>Telegram:</strong> <a href="https://t.me/ggstoresupport" style="color: var(--primary);">@ggstoresupport</a></p>
                 <p>Мы отвечаем в течение 24 часов в рабочие дни.</p>
             </div>
+            <p>Поделитесь своим мнением об адаптере:</p>
+            <a href="https://www.wildberries.ru/catalog/291173424/detail.aspx" class="btn">Оставить отзыв</a>
             <a href="https://t.me/ggstoresupport" class="btn">Написать в поддержку</a>
         </section>
     </div>
