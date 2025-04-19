@@ -1,1 +1,754 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GGStore | Premium складной зонт</title>
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #ff4d00;
+            --gray: #f5f5f5;
+            --dark-gray: #333333;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: var(--secondary);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--secondary);
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--secondary);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 77, 0, 0.2);
+        }
+        
+        /* Features Section */
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: var(--gray);
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        
+        /* Colors Section */
+        .colors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .color-card {
+            background-color: var(--gray);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .color-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .color-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: block;
+            cursor: pointer;
+        }
+        
+        .color-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+        
+        /* Instructions Section */
+        .instructions {
+            background-color: var(--gray);
+        }
+        
+        .instruction-steps {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 40px;
+            align-items: center;
+        }
+        
+        .step-number {
+            background-color: var(--accent);
+            color: var(--secondary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-right: 30px;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        
+        /* Guarantee Section */
+        .guarantee {
+            text-align: center;
+            background-color: var(--primary);
+            color: var(--secondary);
+            padding: 80px 0;
+        }
+        
+        .guarantee h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .guarantee p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .guarantee-badge {
+            background-color: var(--accent);
+            color: var(--secondary);
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Product Specs Section */
+        .specs {
+            padding: 80px 0;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .spec-item {
+            text-align: center;
+        }
+        
+        .spec-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .spec-label {
+            font-size: 18px;
+            color: var(--dark-gray);
+        }
+        
+        /* FAQ Section */
+        .faq {
+            padding: 100px 0;
+        }
+        
+        .faq-item {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            background-color: var(--gray);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .faq-item h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .faq-item p {
+            font-size: 16px;
+            color: var(--dark-gray);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .contact-info {
+            margin-top: 40px;
+        }
+        
+        .contact-info p {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .telegram-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .telegram-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--secondary);
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .footer-logo span {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .section-title h2 {
+                font-size: 30px;
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .color-image {
+                max-width: 150px;
+                height: auto;
+            }
+            
+            .color-card h3 {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .color-image {
+                max-width: 120px;
+                height: auto;
+            }
+            
+            .color-card h3 {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">GG<span>Store</span></div>
+                <ul class="nav-links">
+                    <li><a href="#features">Преимущества</a></li>
+                    <li><a href="#specs">Характеристики</a></li>
+                    <li><a href="#colors">Цвета</a></li>
+                    <li><a href="#instructions">Инструкция</a></li>
+                    <li><a href="#faq">Частые вопросы</a></li>
+                    <li><a href="#guarantee">Гарантия</a></li>
+                    <li><a href="#contact">Поддержка</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Складной зонт от GGStore</h1>
+                <p>Элегантность, надёжность и удобство в каждой детали. Защита от непогоды в стильном исполнении.</p>
+                <a href="#features" class="btn">Узнать больше</a>
+                <a href="https://www.wildberries.ru/catalog/178060329/detail.aspx?targetUrl=EX" class="btn" target="_blank">Оставить отзыв</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Преимущества</h2>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Стиль и удобство</h3>
+                    <p>Классический чёрный цвет сочетает элегантность и практичность. Компактные размеры (31 см) позволяют легко носить с собой.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Полный автомат</h3>
+                    <p>Раскрывается и складывается одним нажатием кнопки. Трехсекционный механизм делает его компактным.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Надёжная защита</h3>
+                    <p>Купол 104 см укрывает от дождя. Прочный каркас из стали и фибергласса выдерживает порывы ветра.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Specs Section -->
+    <section class="section specs" id="specs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Характеристики</h2>
+            </div>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="spec-value">104 см</div>
+                    <div class="spec-label">Диаметр купола</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">31 см</div>
+                    <div class="spec-label">Длина в сложенном виде</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">16</div>
+                    <div class="spec-label">Количество спиц</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">390 г</div>
+                    <div class="spec-label">Вес</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Colors Section -->
+    <section class="section" id="colors">
+        <div class="container">
+            <div class="section-title">
+                <h2>Цвета</h2>
+            </div>
+            <div class="colors">
+                <div class="color-card">
+                    <a href="https://www.wildberries.ru/catalog/178060329/detail.aspx" target="_blank">
+                        <img src="images/black-umbrella.jpg" alt="Чёрный зонт" class="color-image">
+                    </a>
+                    <h3>Чёрный</h3>
+                </div>
+                <div class="color-card">
+                    <a href="https://www.wildberries.ru/catalog/229570232/detail.aspx" target="_blank">
+                        <img src="images/green-umbrella.jpg" alt="Зелёный зонт" class="color-image">
+                    </a>
+                    <h3>Зелёный</h3>
+                </div>
+                <div class="color-card">
+                    <a href="https://www.wildberries.ru/catalog/229570233/detail.aspx" target="_blank">
+                        <img src="images/blue-umbrella.jpg" alt="Синий зонт" class="color-image">
+                    </a>
+                    <h3>Синий</h3>
+                </div>
+                <div class="color-card">
+                    <a href="https://www.wildberries.ru/catalog/229570234/detail.aspx" target="_blank">
+                        <img src="images/red-umbrella.jpg" alt="Красный зонт" class="color-image">
+                    </a>
+                    <h3>Красный</h3>
+                </div>
+                <div class="color-card">
+                    <a href="https://www.wildberries.ru/catalog/229570235/detail.aspx" target="_blank">
+                        <img src="images/pink-umbrella.jpg" alt="Розовый зонт" class="color-image">
+                    </a>
+                    <h3>Розовый</h3>
+                </div>
+                <div class="color-card">
+                    <a href="https://www.wildberries.ru/catalog/229570236/detail.aspx" target="_blank">
+                        <img src="images/beige-umbrella.jpg" alt="Бежевый зонт" class="color-image">
+                    </a>
+                    <h3>Бежевый</h3>
+                </div>
+                <div class="color-card">
+                    <a href="https://www.wildberries.ru/catalog/282163151/detail.aspx" target="_blank">
+                        <img src="images/gray-umbrella.jpg" alt="Серый зонт" class="color-image">
+                    </a>
+                    <h3>Серый</h3>
+                </div>
+                <div class="color-card">
+                    <a href="https://www.wildberries.ru/catalog/282163853/detail.aspx" target="_blank">
+                        <img src="images/turquoise-umbrella.jpg" alt="Бирюзовый зонт" class="color-image">
+                    </a>
+                    <h3>Бирюзовый</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructions Section -->
+    <section class="section instructions" id="instructions">
+        <div class="container">
+            <div class="section-title">
+                <h2>Инструкция по использованию</h2>
+            </div>
+            <div class="instruction-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Как открыть зонт</h3>
+                        <p>Нажмите на кнопку "AUTO OPEN" на ручке – зонт раскроется мгновенно. Убедитесь, что ничто не мешает раскрытию купола.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Как сложить зонт</h3>
+                        <p>Удерживайте кнопку "AUTO FOLD" и аккуратно сложите секции до щелчка. Не прикладывайте излишних усилий.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Как ухаживать</h3>
+                        <p>После использования дайте зонту высохнуть в раскрытом состоянии. Храните в сухом месте, избегая деформации купола.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee Section -->
+    <section class="guarantee" id="guarantee">
+        <div class="container">
+            <h2>Мы уверены в качестве нашей продукции</h2>
+            <p>Зонт GGStore создан из высококачественных материалов: прочная сталь, лёгкий фибергласс и водоотталкивающий полиэстер с эпонжем.</p>
+            <div class="guarantee-badge">Гарантия 6 месяцев</div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq" id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Частые вопросы</h2>
+            </div>
+            <div class="faq-item">
+                <h3>Зонт автоматический?</h3>
+                <p>Да, зонт полностью автоматический. Он открывается и закрывается одним нажатием кнопки благодаря трехсекционному механизму.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Выдерживает ли зонт сильный ветер?</h3>
+                <p>Зонт имеет прочный каркас из стали и фибергласса, который устойчив к порывам ветра. Однако рекомендуем избегать экстремальных погодных условий.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Как ухаживать за зонтом?</h3>
+                <p>После использования дайте зонту полностью высохнуть в раскрытом виде. Храните его в сухом месте, чтобы избежать повреждений купола.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Есть ли гарантия?</h3>
+                <p>Да, мы предоставляем гарантию на 6 месяцев. Если возникнут проблемы, свяжитесь с нашей службой поддержки.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Служба поддержки</h2>
+            </div>
+            <div class="contact-info">
+                <p>Если у вас возникли вопросы, напишите нам</p>
+                <p>Telegram: <a href="https://t.me/ggstoresupport" class="telegram-link">@ggstoresupport</a></p>
+                <p>Часы работы: 9:00 - 18:00</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">GG<span>Store</span></div>
+            <p class="copyright">© 2023 GGStore. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.feature-card, .step, .spec-item, .faq-item, .color-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Set initial state for animation
+        window.addEventListener('DOMContentLoaded', () => {
+            const featureCards = document.querySelectorAll('.feature-card');
+            const steps = document.querySelectorAll('.step');
+            const specs = document.querySelectorAll('.spec-item');
+            const faqItems = document.querySelectorAll('.faq-item');
+            const colorCards = document.querySelectorAll('.color-card');
+            
+            featureCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            steps.forEach(step => {
+                step.style.opacity = '0';
+                step.style.transform = 'translateY(20px)';
+                step.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            specs.forEach(spec => {
+                spec.style.opacity = '0';
+                spec.style.transform = 'translateY(20px)';
+                spec.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            faqItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            colorCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+        });
+        
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'932c80a09f694507',t:'MTc0NTA2Njc2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+</html>
