@@ -25,7 +25,7 @@
             border-radius: 4px;
             padding: 10px;
             background-color: #f9f9f9;
-            height: 60px; /* Fixed height for all cells */
+            height: 60px;
         }
     </style>
 </head>
@@ -37,6 +37,14 @@
                 <div class="form-group">
                     <label for="fileInput">Upload Genes File:</label>
                     <input type="file" id="fileInput" class="form-control-file">
+
+                    <!-- 👇 Добавлен блок для поиска гена -->
+                    <div class="form-group mt-3">
+                        <label for="searchGene">Search Gene:</label>
+                        <input type="text" id="searchGene" class="form-control" placeholder="Enter gene name">
+                        <small id="searchResult" class="form-text text-muted mt-2"></small>
+                    </div>
+
                     <button id="downloadButton" class="btn btn-success mt-3" style="display: none;">Download Clustered Genes</button>
                 </div>
             </div>
@@ -142,6 +150,20 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
+        });
+
+        // 👇 Добавлен поиск по гену
+        document.getElementById("searchGene").addEventListener("input", () => {
+            const query = document.getElementById("searchGene").value.trim();
+            const result = Object.entries(predefinedClusters).find(([cluster, genes]) =>
+                genes.includes(query)
+            );
+            const output = result
+                ? `Belongs to ${result[0]}`
+                : query === ""
+                    ? ""
+                    : "Not found in predefined clusters";
+            document.getElementById("searchResult").textContent = output;
         });
     </script>
 </body>
