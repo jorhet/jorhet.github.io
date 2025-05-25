@@ -37,18 +37,27 @@
                 <div class="form-group">
                     <label for="fileInput">Upload Genes File:</label>
                     <input type="file" id="fileInput" class="form-control-file">
-
-                    <!-- 👇 Добавлен блок для поиска гена -->
-                    <div class="form-group mt-3">
-                        <label for="searchGene">Search Gene:</label>
-                        <input type="text" id="searchGene" class="form-control" placeholder="Enter gene name">
-                        <small id="searchResult" class="form-text text-muted mt-2"></small>
-                    </div>
-
                     <button id="downloadButton" class="btn btn-success mt-3" style="display: none;">Download Clustered Genes</button>
                 </div>
             </div>
         </div>
+
+        <!-- Новый блок: поиск гена + кнопка -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group mt-3">
+                    <label for="searchGene">Search Gene:</label>
+                    <div class="input-group">
+                        <input type="text" id="searchGene" class="form-control" placeholder="Enter gene name">
+                        <div class="input-group-append">
+                            <button id="searchButton" class="btn btn-outline-primary" type="button">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кластер селект и отображение генов -->
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -68,7 +77,7 @@
         const clusterSelect = document.getElementById("clusterSelect");
         const geneList = document.getElementById("geneList");
 
-        // Load clusterization.csv and initialize the clusters
+        // Загрузка кластеризации
         fetch("clusterization.csv")
             .then(response => response.text())
             .then(data => {
@@ -101,7 +110,7 @@
             geneList.innerHTML = genes.map(gene => `<div class="gene-item">${gene}</div>`).join("");
         }
 
-        // Process user-uploaded file and cluster the genes
+        // Обработка пользовательского файла
         document.getElementById("fileInput").addEventListener("change", (event) => {
             const file = event.target.files[0];
             if (!file) return;
@@ -121,7 +130,7 @@
                 let found = false;
                 for (const [cluster, genes] of Object.entries(predefinedClusters)) {
                     if (genes.includes(gene)) {
-                        const clusterNumber = cluster.replace("Cluster ", ""); // Extract number only
+                        const clusterNumber = cluster.replace("Cluster ", "");
                         if (!userClusteredGenes[clusterNumber]) userClusteredGenes[clusterNumber] = [];
                         userClusteredGenes[clusterNumber].push(gene);
                         found = true;
@@ -135,7 +144,7 @@
             });
         }
 
-        // Download clustered genes as CSV
+        // Скачать файл с кластеризацией
         document.getElementById("downloadButton").addEventListener("click", () => {
             const csvContent = Object.entries(userClusteredGenes)
                 .map(([cluster, genes]) => genes.map(gene => `${gene},${cluster}`).join("\n"))
@@ -152,18 +161,17 @@
             URL.revokeObjectURL(url);
         });
 
-        // 👇 Добавлен поиск по гену
-        document.getElementById("searchGene").addEventListener("input", () => {
+        // Поиск гена и выбор кластера
+        document.getElementById("searchButton").addEventListener("click", () => {
             const query = document.getElementById("searchGene").value.trim();
             const result = Object.entries(predefinedClusters).find(([cluster, genes]) =>
                 genes.includes(query)
             );
-            const output = result
-                ? `Belongs to ${result[0]}`
-                : query === ""
-                    ? ""
-                    : "Not found in predefined clusters";
-            document.getElementById("searchResult").textContent = output;
+
+            if (result) {
+                clusterSelect.value = result[0];
+                updateGeneList();
+            }
         });
     </script>
 </body>
