@@ -1,178 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gene Clusters</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-        }
-        .gene-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 10px;
-        }
-        .gene-item {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            height: 60px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gene Clusters</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+    }
+    .gene-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    .gene-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      height: 60px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="my-4">Gene Clusters</h1>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="fileInput">Upload Genes File:</label>
-                    <input type="file" id="fileInput" class="form-control-file">
-                    <button id="downloadButton" class="btn btn-success mt-3" style="display: none;">Download Clustered Genes</button>
-                </div>
-            </div>
+  <div class="container">
+    <h1 class="my-4">Gene Clusters</h1>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="fileInput">Upload Genes File:</label>
+          <input type="file" id="fileInput" class="form-control-file">
+          <button id="downloadButton" class="btn btn-success mt-3" style="display: none;">Download Clustered Genes</button>
         </div>
-
-        <!-- Новый блок: поиск гена + кнопка -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group mt-3">
-                    <label for="searchGene">Search Gene:</label>
-                    <div class="input-group">
-                        <input type="text" id="searchGene" class="form-control" placeholder="Enter gene name">
-                        <div class="input-group-append">
-                            <button id="searchButton" class="btn btn-outline-primary" type="button">Search</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="form-group d-flex align-items-end">
+          <input type="text" id="searchGene" class="form-control" placeholder="Search gene">
         </div>
-
-        <!-- Кластер селект и отображение генов -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="clusterSelect">Select Cluster:</label>
-                    <select id="clusterSelect" class="form-control"></select>
-                </div>
-                <h2 class="my-4">Genes in Selected Cluster:</h2>
-                <div id="geneList" class="gene-grid"></div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="clusterSelect">Select Cluster:</label>
+          <select id="clusterSelect" class="form-control"></select>
+        </div>
+        <h2 class="my-4">Genes in Selected Cluster:</h2>
+        <div id="geneList" class="gene-grid"></div>
+      </div>
+    </div>
+  </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script>
-        const predefinedClusters = {};
-        let userClusteredGenes = {};
-        const clusterSelect = document.getElementById("clusterSelect");
-        const geneList = document.getElementById("geneList");
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <script>
+    const predefinedClusters = {};
+    let userClusteredGenes = {};
+    const clusterSelect = document.getElementById("clusterSelect");
+    const geneList = document.getElementById("geneList");
 
-        // Загрузка кластеризации
-        fetch("clusterization.csv")
-            .then(response => response.text())
-            .then(data => {
-                const parsed = Papa.parse(data, { header: true });
-                parsed.data.forEach(row => {
-                    const cluster = `Cluster ${row.cluster}`;
-                    if (!predefinedClusters[cluster]) {
-                        predefinedClusters[cluster] = [];
-                    }
-                    predefinedClusters[cluster].push(row.okved);
-                });
-                populateClusterSelect();
-                updateGeneList();
-            });
-
-        function populateClusterSelect() {
-            clusterSelect.innerHTML = "";
-            Object.keys(predefinedClusters).forEach(cluster => {
-                const option = document.createElement("option");
-                option.value = cluster;
-                option.textContent = cluster;
-                clusterSelect.appendChild(option);
-            });
-            clusterSelect.addEventListener("change", updateGeneList);
-        }
-
-        function updateGeneList() {
-            const selectedCluster = clusterSelect.value;
-            const genes = predefinedClusters[selectedCluster] || [];
-            geneList.innerHTML = genes.map(gene => `<div class="gene-item">${gene}</div>`).join("");
-        }
-
-        // Обработка пользовательского файла
-        document.getElementById("fileInput").addEventListener("change", (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const userGenes = Papa.parse(e.target.result, { header: false }).data.flat();
-                clusterUserGenes(userGenes);
-                document.getElementById("downloadButton").style.display = "block";
-            };
-            reader.readAsText(file);
+    // Загрузка кластера из CSV
+    fetch("clusterization.csv")
+      .then(response => response.text())
+      .then(data => {
+        const parsed = Papa.parse(data, { header: true });
+        parsed.data.forEach(row => {
+          const cluster = `Cluster ${row.cluster}`;
+          if (!predefinedClusters[cluster]) {
+            predefinedClusters[cluster] = [];
+          }
+          predefinedClusters[cluster].push(row.okved);
         });
+        populateClusterSelect();
+        updateGeneList();
+      });
 
-        function clusterUserGenes(userGenes) {
-            userClusteredGenes = {};
-            userGenes.forEach(gene => {
-                let found = false;
-                for (const [cluster, genes] of Object.entries(predefinedClusters)) {
-                    if (genes.includes(gene)) {
-                        const clusterNumber = cluster.replace("Cluster ", "");
-                        if (!userClusteredGenes[clusterNumber]) userClusteredGenes[clusterNumber] = [];
-                        userClusteredGenes[clusterNumber].push(gene);
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    if (!userClusteredGenes["None"]) userClusteredGenes["None"] = [];
-                    userClusteredGenes["None"].push(gene);
-                }
-            });
+    function populateClusterSelect() {
+      clusterSelect.innerHTML = "";
+      Object.keys(predefinedClusters).forEach(cluster => {
+        const option = document.createElement("option");
+        option.value = cluster;
+        option.textContent = cluster;
+        clusterSelect.appendChild(option);
+      });
+      clusterSelect.addEventListener("change", updateGeneList);
+    }
+
+    function updateGeneList() {
+      const selectedCluster = clusterSelect.value;
+      const genes = predefinedClusters[selectedCluster] || [];
+      geneList.innerHTML = genes.map(gene => `<div class="gene-item">${gene}</div>`).join("");
+    }
+
+    // Обработка загрузки файла
+    document.getElementById("fileInput").addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const userGenes = Papa.parse(e.target.result, { header: false }).data.flat();
+        clusterUserGenes(userGenes);
+        document.getElementById("downloadButton").style.display = "block";
+      };
+      reader.readAsText(file);
+    });
+
+    function clusterUserGenes(userGenes) {
+      userClusteredGenes = {};
+      userGenes.forEach(gene => {
+        let found = false;
+        for (const [cluster, genes] of Object.entries(predefinedClusters)) {
+          if (genes.includes(gene)) {
+            const clusterNumber = cluster.replace("Cluster ", "");
+            if (!userClusteredGenes[clusterNumber]) userClusteredGenes[clusterNumber] = [];
+            userClusteredGenes[clusterNumber].push(gene);
+            found = true;
+            break;
+          }
         }
+        if (!found) {
+          if (!userClusteredGenes["None"]) userClusteredGenes["None"] = [];
+          userClusteredGenes["None"].push(gene);
+        }
+      });
+    }
 
-        // Скачать файл с кластеризацией
-        document.getElementById("downloadButton").addEventListener("click", () => {
-            const csvContent = Object.entries(userClusteredGenes)
-                .map(([cluster, genes]) => genes.map(gene => `${gene},${cluster}`).join("\n"))
-                .join("\n");
+    // Загрузка файла с результатом
+    document.getElementById("downloadButton").addEventListener("click", () => {
+      const csvContent = Object.entries(userClusteredGenes)
+        .map(([cluster, genes]) => genes.map(gene => `${gene},${cluster}`).join("\n"))
+        .join("\n");
 
-            const blob = new Blob([csvContent], { type: "text/csv" });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = "user_clustered_genes.csv";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-        });
+      const blob = new Blob([csvContent], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "user_clustered_genes.csv";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
 
-        // Поиск гена и выбор кластера
-        document.getElementById("searchButton").addEventListener("click", () => {
-            const query = document.getElementById("searchGene").value.trim();
-            const result = Object.entries(predefinedClusters).find(([cluster, genes]) =>
-                genes.includes(query)
-            );
-
-            if (result) {
-                clusterSelect.value = result[0];
-                updateGeneList();
-            }
-        });
-    </script>
+    // Автоматический поиск по мере ввода
+    document.getElementById("searchGene").addEventListener("input", (e) => {
+      const query = e.target.value.trim().toLowerCase();
+      const foundCluster = Object.entries(predefinedClusters).find(([cluster, genes]) =>
+        genes.some(g => g.toLowerCase() === query)
+      );
+      if (foundCluster) {
+        clusterSelect.value = foundCluster[0];
+        updateGeneList();
+      }
+    });
+  </script>
 </body>
 </html>
